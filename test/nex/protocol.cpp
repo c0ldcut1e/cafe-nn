@@ -1,5 +1,19 @@
 #include <cstdio>
 #include <nn/nex.h>
+#include <nn/nex/auth/KerberosEncryption.h>
+#include <nn/nex/auth/NotificationEvent.h>
+#include <nn/nex/core/Buffer.h>
+#include <nn/nex/core/String.h>
+#include <nn/nex/matchmaking/Gathering.h>
+#include <nn/nex/matchmaking/MatchmakeDefs.h>
+#include <nn/nex/matchmaking/MatchmakeExtensionClient.h>
+#include <nn/nex/matchmaking/MatchmakeParam.h>
+#include <nn/nex/matchmaking/MatchmakeSession.h>
+#include <nn/nex/matchmaking/MatchmakeSessionSearchCriteria.h>
+#include <nn/nex/matchmaking/PersistentGathering.h>
+#include <nn/nex/rmc/AnyObjectHolder.h>
+#include <nn/nex/rmc/Message.h>
+#include <nn/nex/rmc/Variant.h>
 
 using namespace nn::nex;
 

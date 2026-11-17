@@ -59,7 +59,7 @@ namespace pead
          * @brief This converts between the host order and type, which is the same operation in both directions.
          *
          * @param type The order the value is stored in, or should be stored in.
-         * @param v The value to convert.
+         * @param v The value in host order or in type's order.
          * @return v unchanged when type is the host's order, otherwise v byte-swapped.
          */
         static u16 convertU16(Types type, u16 v)
@@ -256,7 +256,7 @@ namespace pead
         /**
          * @brief This turns a core into the affinity bit the system thread API wants.
          *
-         * @param id The core to convert.
+         * @param id The core, which is mapped to a hardware core first.
          * @return The OS affinity mask with only that core's bit set.
          */
         static u32 getPlatformMask(CoreId id);

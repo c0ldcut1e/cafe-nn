@@ -1,4 +1,12 @@
 #include "Binding.h"
+#include <nn/nex/auth/AuthenticationInfo.h>
+#include <nn/nex/auth/NintendoLoginData.h>
+#include <nn/nex/auth/NotificationEvent.h>
+#include <nn/nex/auth/NotificationEventHandler.h>
+#include <nn/nex/auth/RVConnectionData.h>
+#include <nn/nex/auth/SecureConnectionProtocolClient.h>
+#include <nn/nex/auth/TicketGrantingProtocolClient.h>
+#include <nn/nex/types.h>
 
 namespace nn::nex::lua
 {

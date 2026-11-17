@@ -64,7 +64,7 @@ namespace pead
          * @brief This carves a new heap out of parent.
          *
          * @param size The size in bytes, or 0 to take everything parent has left.
-         * @param name The heap's name.
+         * @param name The name shown in dumps. It is copied.
          * @param parent The heap to allocate from, or null for the current one.
          * @param direction The default allocation end.
          * @param enableLock True when more than one thread uses the heap.
@@ -76,9 +76,9 @@ namespace pead
         /**
          * @brief This builds a root heap inside memory the caller owns. The heap object itself takes the first bytes.
          *
-         * @param address The memory.
-         * @param size The size of the memory.
-         * @param name The heap's name.
+         * @param address The memory, which has to outlive the heap.
+         * @param size The size of the memory in bytes.
+         * @param name The name shown in dumps. It is copied.
          * @param enableLock True when more than one thread uses the heap.
          * @return The heap, or null when the memory is too small.
          */

@@ -100,7 +100,7 @@ namespace pead
         /**
          * @brief This finds the deepest heap that holds ptr.
          *
-         * @param ptr The address to look up.
+         * @param ptr Any address, including one inside a block.
          * @return The heap, or null when no heap holds ptr.
          */
         Heap *findContainHeap(const void *ptr) const;
@@ -109,7 +109,7 @@ namespace pead
         /**
          * @brief This finds a heap by name, searching depth first from the root.
          *
-         * @param name The name to look for.
+         * @param name The name the heap was created with, compared exactly.
          * @param index Which match to return, counting from 0.
          * @return The heap, or null.
          */
@@ -123,7 +123,7 @@ namespace pead
         /**
          * @brief This changes the calling thread's current heap.
          *
-         * @param heap The new current heap.
+         * @param heap The heap that new allocations without a heap come from.
          * @return The previous current heap.
          */
         Heap *setCurrentHeap_(Heap *heap);

@@ -22,7 +22,7 @@ namespace pead
          *
          * @param dst The output, at least calcEncodedSize(srcSize) + 1 bytes.
          * @param src The bytes to encode.
-         * @param srcSize The size of src.
+         * @param srcSize The size of src in bytes.
          * @param urlSafe True for '-' and '_' in place of '+' and '/'.
          */
         static void encode(char *dst, const void *src, u32 srcSize, bool urlSafe);
@@ -30,10 +30,10 @@ namespace pead
         /**
          * @brief This decodes either alphabet and accepts missing padding.
          *
-         * @param dst The output buffer.
-         * @param dstSize The size of dst.
-         * @param src The text to decode.
-         * @param srcSize The length of src.
+         * @param dst Receives the decoded bytes. It is not terminated.
+         * @param dstSize The size of dst in bytes.
+         * @param src The text to decode. It doesn't need a terminator.
+         * @param srcSize The length of src in characters.
          * @param decodedSize Receives the decoded size. It may be null.
          * @return False when src has a character outside both alphabets or dst is too small.
          */

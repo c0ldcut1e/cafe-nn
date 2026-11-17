@@ -1,5 +1,8 @@
 #include <cstdio>
 #include <cstring>
+#include <nn/nex/platform/InetAddress.h>
+#include <nn/nex/runtime/Job.h>
+#include <nn/nex/runtime/Scheduler.h>
 #include <nn/pia/common/ModuleStackChecker.h>
 #include <nn/pia/common/Scheduler.h>
 #include <nn/pia/common/StationAddress.h>

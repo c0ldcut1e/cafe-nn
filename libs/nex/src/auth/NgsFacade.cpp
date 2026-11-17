@@ -1,5 +1,15 @@
 #include <cstdio>
-#include <nn/nex/Authentication.h>
+#include <nn/nex/auth/AuthenticationInfo.h>
+#include <nn/nex/auth/BackEndServices.h>
+#include <nn/nex/auth/KerberosEncryption.h>
+#include <nn/nex/auth/NexServiceToken.h>
+#include <nn/nex/auth/NgsFacade.h>
+#include <nn/nex/auth/NintendoLoginData.h>
+#include <nn/nex/auth/RVConnectionData.h>
+#include <nn/nex/auth/SecureConnectionProtocolClient.h>
+#include <nn/nex/auth/Ticket.h>
+#include <nn/nex/auth/TicketGrantingProtocolClient.h>
+#include <nn/nex/platform/RandomNumberGenerator.h>
 
 #ifdef __WIIU__
 #include <coreinit/dynload.h>

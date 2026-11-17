@@ -1,4 +1,5 @@
-#include <nn/nex/PRUDPEndPoint.h>
+#include <nn/nex/platform/RandomNumberGenerator.h>
+#include <nn/nex/transport/PRUDPEndPoint.h>
 
 namespace nn::nex
 {

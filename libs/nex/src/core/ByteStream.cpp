@@ -1,4 +1,4 @@
-#include <nn/nex/ByteStream.h>
+#include <nn/nex/core/ByteStream.h>
 
 namespace nn::nex
 {

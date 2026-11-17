@@ -40,7 +40,7 @@ namespace pead
         /**
          * @brief This allocates room for size messages.
          *
-         * @param size The capacity.
+         * @param size How many messages fit before post blocks or fails.
          * @param heap The heap to allocate from, or null for the current one.
          */
         void allocate(s32 size, Heap *heap);

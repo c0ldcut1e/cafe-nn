@@ -1,9 +1,13 @@
 #include <cstdio>
 #include <cstdlib>
-#include <nn/nex/ByteStream.h>
-#include <nn/nex/Crypto.h>
-#include <nn/nex/PRUDPMessageV1.h>
-#include <nn/nex/StationURL.h>
+#include <nn/nex/core/Buffer.h>
+#include <nn/nex/core/ByteStream.h>
+#include <nn/nex/core/DateTime.h>
+#include <nn/nex/core/StationURL.h>
+#include <nn/nex/core/String.h>
+#include <nn/nex/crypto/MD5.h>
+#include <nn/nex/crypto/RC4.h>
+#include <nn/nex/transport/PRUDPMessageV1.h>
 
 using namespace nn::nex;
 

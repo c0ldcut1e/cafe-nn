@@ -53,14 +53,14 @@ namespace nn::pia
         /**
          * @brief Stores the NEX error code that GetErrorCode reports for NexErrorValue. Zero clears it.
          *
-         * @param code The NEX network error code.
+         * @param code The code NEX reported for the failed call.
          */
         static void SetNexNetworkErrorCode(u32 code);
 
         /**
          * @brief Stores the code that GetErrorCode reports for TransportErrorValue. Zero clears it.
          *
-         * @param code The error code.
+         * @param code The code the transport reported.
          */
         static void SetTransportErrorCode(u32 code);
 

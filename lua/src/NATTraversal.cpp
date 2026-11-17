@@ -1,4 +1,5 @@
 #include "Binding.h"
+#include <nn/nex/nat/NATTraversal.h>
 
 namespace nn::nex::lua
 {

@@ -35,7 +35,7 @@ namespace pead
         /**
          * @brief This maps c through table.
          *
-         * @param c The character to map.
+         * @param c The character to look up.
          * @param table Pairs sorted by key.
          * @return The mapped character, or c when table has no entry for it.
          */

@@ -20,7 +20,7 @@ namespace pead
         /**
          * @brief This reads up to size bytes.
          *
-         * @param dst The output buffer.
+         * @param dst Receives the bytes. It needs room for size bytes.
          * @param size How many bytes to read.
          * @return How many bytes were read, which is less than size at the end.
          */
@@ -86,7 +86,7 @@ namespace pead
         /**
          * @brief This reads a string. The binary format reads exactly size bytes and the text format reads one token.
          *
-         * @param src The source.
+         * @param src Where the bytes come from.
          * @param dst Receives the string.
          * @param size The byte count for the binary format.
          */

@@ -6,6 +6,8 @@ Class and function names match Nintendo's (`nn::nex::NgsFacade`, `nn::nex::Match
 
 It builds for the Wii U through devkitPro/wut, and natively for Linux and Windows. A PC program can log in to a NEX server the same way the console does, and everything can be tested without a console. All of it is also usable from Lua.
 
+Some of the code and most of the comments were written with AI. All of that work was directed and supervised by a human, who reviewed and checked every change before it went in.
+
 ## Libraries
 
 | Library | Namespace | Status |

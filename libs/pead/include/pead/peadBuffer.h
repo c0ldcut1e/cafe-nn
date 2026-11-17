@@ -49,7 +49,7 @@ namespace pead
         /**
          * @brief This finds key in a buffer sorted by cmp.
          *
-         * @param key The value to look for.
+         * @param key The value cmp compares each element against.
          * @param cmp Returns a negative number, zero or a positive number when the element sorts before, equal to or after key.
          * @return The index of a matching element, or -1.
          */

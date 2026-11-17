@@ -103,7 +103,7 @@ namespace pead
         /**
          * @brief This compares character values one by one, like strcmp.
          *
-         * @param other The string to compare against.
+         * @param other The string to compare against. Its length doesn't have to match.
          * @return A negative number, zero or a positive number when this sorts before, equal to or after other.
          */
         s32 comparewith(const SafeStringBase &other) const;
@@ -111,7 +111,7 @@ namespace pead
         /**
          * @brief This finds the first occurrence of token.
          *
-         * @param token The text to look for.
+         * @param token The text to look for. An empty token matches at 0.
          * @return The index of the first match, or -1.
          */
         s32 findIndex(const SafeStringBase &token) const;
@@ -215,7 +215,7 @@ namespace pead
          * @brief This replaces every occurrence of oldStr with newStr.
          *
          * @param oldStr The text to find. An empty string replaces nothing.
-         * @param newStr The replacement.
+         * @param newStr The replacement. It may be longer or shorter than oldStr.
          * @return How many occurrences were replaced, including any cut off at the end of the buffer.
          */
         s32 replaceString(const SafeStringBase<T> &oldStr, const SafeStringBase<T> &newStr);

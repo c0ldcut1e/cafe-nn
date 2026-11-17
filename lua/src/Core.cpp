@@ -1,6 +1,14 @@
 #include "Binding.h"
 
 #include <cstring>
+#include <nn/nex/auth/KerberosEncryption.h>
+#include <nn/nex/core/DateTime.h>
+#include <nn/nex/core/StationURL.h>
+#include <nn/nex/core/String.h>
+#include <nn/nex/crypto/MD5.h>
+#include <nn/nex/crypto/RC4.h>
+#include <nn/nex/platform/InetAddress.h>
+#include <nn/nex/rmc/ResultRange.h>
 
 namespace nn::nex::lua
 {

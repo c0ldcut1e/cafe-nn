@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <mutex>
-#include <nn/crypto.h>
+#include <nn/crypto/Random.h>
 
 #if defined(__WIIU__)
 #include <coreinit/time.h>

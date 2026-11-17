@@ -15,16 +15,25 @@
 namespace nn::nex
 {
 
-    using qByte          = uint8_t;
-    using qUnsignedInt8  = uint8_t;
+    using qByte = uint8_t;
+
+    using qUnsignedInt8 = uint8_t;
+
     using qUnsignedInt16 = uint16_t;
+
     using qUnsignedInt32 = uint32_t;
+
     using qUnsignedInt64 = uint64_t;
-    using qInt8          = int8_t;
-    using qInt16         = int16_t;
-    using qInt32         = int32_t;
-    using qInt64         = int64_t;
-    using qChar          = wchar_t;
+
+    using qInt8 = int8_t;
+
+    using qInt16 = int16_t;
+
+    using qInt32 = int32_t;
+
+    using qInt64 = int64_t;
+
+    using qChar = wchar_t;
 
     /**
      * @brief This holds a NEX result code where bit 31 set means failure, the same layout the servers send in RMC responses.
@@ -161,97 +170,6 @@ namespace nn::nex
         inline constexpr qUnsignedInt32 Transport_NatCheckError                             = 0x80050021;
     } // namespace QResult
 
-    class String
-    {
-    public:
-        String() = default;
-        String(const qChar *s) : m_str(s ? s : L"")
-        {}
-        String(const char *s)
-        {
-            Assign(s);
-        }
-
-        const qChar *CStr() const
-        {
-            return m_str.c_str();
-        }
-        size_t GetLength() const
-        {
-            return m_str.size();
-        }
-        bool IsEmpty() const
-        {
-            return m_str.empty();
-        }
-
-        /**
-         * @brief NEX strings travel as UTF-8, so we convert here instead of in every serializer.
-         */
-        std::string ToUtf8() const;
-        void Assign(const char *utf8);
-
-        bool operator==(const String &o) const
-        {
-            return m_str == o.m_str;
-        }
-        bool operator<(const String &o) const
-        {
-            return m_str < o.m_str;
-        }
-
-    private:
-        std::wstring m_str;
-    };
-
-    /**
-     * @brief This is a byte buffer that travels with a 32 bit length.
-     */
-    class Buffer
-    {
-    public:
-        Buffer() = default;
-        Buffer(const void *data, size_t size) : m_data((const qByte *) data, (const qByte *) data + size)
-        {}
-
-        const qByte *GetContentPtr() const
-        {
-            return m_data.data();
-        }
-        qByte *GetContentPtr()
-        {
-            return m_data.data();
-        }
-        size_t GetContentSize() const
-        {
-            return m_data.size();
-        }
-        void Resize(size_t size)
-        {
-            m_data.resize(size);
-        }
-        void Append(const void *data, size_t size)
-        {
-            m_data.insert(m_data.end(), (const qByte *) data, (const qByte *) data + size);
-        }
-        void Clear()
-        {
-            m_data.clear();
-        }
-
-    private:
-        std::vector<qByte> m_data;
-    };
-
-    /**
-     * @brief qBuffer differs from Buffer only on the wire, where it uses a 16 bit length.
-     */
-    class qBuffer : public Buffer
-    {
-    public:
-        using Buffer::Buffer;
-    };
-
     template<typename T>
 
     /**
@@ -262,70 +180,12 @@ namespace nn::nex
     public:
         using std::list<T>::list;
     };
+
     template<typename T>
     class qVector : public std::vector<T>
     {
     public:
         using std::vector<T>::vector;
-    };
-
-    /**
-     * @brief This packs the date into the same bit fields the servers use: year, month, day, hour, minute and second from high to low.
-     */
-    class DateTime
-    {
-    public:
-        DateTime() : m_value(0)
-        {}
-        explicit DateTime(qUnsignedInt64 value) : m_value(value)
-        {}
-        DateTime(qUnsignedInt16 year, qUnsignedInt8 month, qUnsignedInt8 day, qUnsignedInt8 hour, qUnsignedInt8 minute, qUnsignedInt8 second)
-            : m_value(((qUnsignedInt64) year << 26) | ((qUnsignedInt64) month << 22) | ((qUnsignedInt64) day << 17) | ((qUnsignedInt64) hour << 12) |
-                      ((qUnsignedInt64) minute << 6) | second)
-        {}
-
-        unsigned GetYear() const
-        {
-            return (unsigned) (m_value >> 26);
-        }
-        unsigned GetMonth() const
-        {
-            return (unsigned) (m_value >> 22) & 0xF;
-        }
-        unsigned GetDay() const
-        {
-            return (unsigned) (m_value >> 17) & 0x1F;
-        }
-        unsigned GetHour() const
-        {
-            return (unsigned) (m_value >> 12) & 0x1F;
-        }
-        unsigned GetMinute() const
-        {
-            return (unsigned) (m_value >> 6) & 0x3F;
-        }
-        unsigned GetSecond() const
-        {
-            return (unsigned) m_value & 0x3F;
-        }
-        qUnsignedInt64 GetValue() const
-        {
-            return m_value;
-        }
-        bool IsNever() const
-        {
-            return m_value == 0;
-        }
-        bool IsValid() const
-        {
-            return GetMonth() >= 1 && GetMonth() <= 12 && GetDay() >= 1 && GetDay() <= 31;
-        }
-        qUnsignedInt64 ToEpochTime() const;
-
-        static const DateTime Never;
-
-    private:
-        qUnsignedInt64 m_value;
     };
 
 } // namespace nn::nex

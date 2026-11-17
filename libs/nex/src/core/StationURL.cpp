@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include <nn/nex/StationURL.h>
+#include <nn/nex/core/StationURL.h>
 
 namespace nn::nex
 {

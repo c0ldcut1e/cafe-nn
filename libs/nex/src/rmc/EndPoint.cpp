@@ -1,4 +1,13 @@
-#include <nn/nex/EndPoint.h>
+#include <nn/nex/core/Buffer.h>
+#include <nn/nex/core/StationURL.h>
+#include <nn/nex/core/String.h>
+#include <nn/nex/platform/InetAddress.h>
+#include <nn/nex/rmc/EndPoint.h>
+#include <nn/nex/rmc/Message.h>
+#include <nn/nex/rmc/Protocol.h>
+#include <nn/nex/runtime/CallContext.h>
+#include <nn/nex/runtime/ProtocolCallContext.h>
+#include <nn/nex/types.h>
 
 namespace nn::nex
 {
@@ -181,18 +190,6 @@ namespace nn::nex
         ProtocolCallContext *context = it->second;
         m_pending.erase(it);
         context->HandleResponse(result, success ? &m : nullptr);
-    }
-
-    bool ClientProtocol::Call(ProtocolCallContext *context, qUnsignedInt32 methodId, const Message &parameters,
-                              ProtocolCallContext::ResponseHandler handler)
-    {
-        if (!m_endPoint)
-        {
-            if (context && context->InitiateCall())
-                context->SignalFailure(qResult(QResult::Core_InitializationFailure));
-            return false;
-        }
-        return m_endPoint->Call(context, m_protocolId, methodId, parameters, std::move(handler));
     }
 
 } // namespace nn::nex

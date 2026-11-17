@@ -5,6 +5,14 @@
 #include <memory>
 #include <new>
 #include <nn/nex.h>
+#include <nn/nex/auth/NotificationEvent.h>
+#include <nn/nex/core/DateTime.h>
+#include <nn/nex/core/StationURL.h>
+#include <nn/nex/platform/InetAddress.h>
+#include <nn/nex/rmc/ClientProtocol.h>
+#include <nn/nex/rmc/Data.h>
+#include <nn/nex/rmc/EndPoint.h>
+#include <nn/nex/rmc/ResultRange.h>
 #include <tuple>
 #include <type_traits>
 

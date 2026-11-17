@@ -15,7 +15,7 @@ namespace pead
         /**
          * @brief This writes text to the debug console: OSReport on Wii U and stderr elsewhere.
          *
-         * @param str The text.
+         * @param str The text, which is written as is with no formatting.
          * @param length The length, or -1 when str is terminated.
          */
         void PrintString(const char *str, s32 length);

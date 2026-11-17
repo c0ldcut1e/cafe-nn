@@ -106,7 +106,7 @@ namespace pead
         /**
          * @brief This writes the heap's state as YAML.
          *
-         * @param stream The stream to write to.
+         * @param stream Receives the YAML text.
          * @param indent How many spaces deep the heap's entry starts.
          */
         virtual void dumpYAML(WriteStream &stream, s32 indent) const;
@@ -158,7 +158,7 @@ namespace pead
         /**
          * @brief This finds the deepest heap under this one that holds ptr.
          *
-         * @param ptr The address to look up.
+         * @param ptr Any address, including one inside a block.
          * @return The heap, or null when ptr is outside this heap.
          */
         Heap *findContainHeap_(const void *ptr);

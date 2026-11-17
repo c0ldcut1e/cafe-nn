@@ -1,4 +1,16 @@
 #include "Binding.h"
+#include <nn/nex/matchmaking/AutoMatchmakeParam.h>
+#include <nn/nex/matchmaking/CreateMatchmakeSessionParam.h>
+#include <nn/nex/matchmaking/Gathering.h>
+#include <nn/nex/matchmaking/JoinMatchmakeSessionParam.h>
+#include <nn/nex/matchmaking/MatchMakingClient.h>
+#include <nn/nex/matchmaking/MatchmakeExtensionClient.h>
+#include <nn/nex/matchmaking/MatchmakeSession.h>
+#include <nn/nex/matchmaking/MatchmakeSessionSearchCriteria.h>
+#include <nn/nex/matchmaking/PersistentGathering.h>
+#include <nn/nex/matchmaking/PlayingSession.h>
+#include <nn/nex/matchmaking/UpdateMatchmakeSessionParam.h>
+#include <nn/nex/rmc/Variant.h>
 
 namespace nn::nex::lua
 {

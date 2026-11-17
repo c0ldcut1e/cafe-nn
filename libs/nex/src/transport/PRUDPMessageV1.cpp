@@ -1,6 +1,11 @@
-#include <nn/nex/ByteStream.h>
-#include <nn/nex/Crypto.h>
-#include <nn/nex/PRUDPMessageV1.h>
+#include <nn/nex/core/Buffer.h>
+#include <nn/nex/core/ByteStream.h>
+#include <nn/nex/crypto/MD5.h>
+#include <nn/nex/rmc/Data.h>
+#include <nn/nex/transport/PRUDPMessageV1.h>
+#include <nn/nex/transport/PRUDPPacket.h>
+#include <nn/nex/transport/PRUDPSignatureContext.h>
+#include <nn/nex/types.h>
 
 namespace nn::nex
 {
@@ -26,14 +31,6 @@ namespace nn::nex
         }
 
     } // namespace
-
-    void PRUDPSignatureContext::SetAccessKey(const char *accessKey)
-    {
-        size_t len = strlen(accessKey);
-        MD5::Hash(accessKey, len, accessKeyHash);
-        accessKeySum = 0;
-        for (size_t i = 0; i < len; i++) accessKeySum += (qUnsignedInt8) accessKey[i];
-    }
 
     void PRUDPMessageV1::EncodeHeader(const PRUDPPacket &packet, qUnsignedInt8 optionsSize, qUnsignedInt8 out[12])
     {

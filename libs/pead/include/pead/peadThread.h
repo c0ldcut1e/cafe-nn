@@ -39,7 +39,7 @@ namespace pead
          * @param heap The heap the thread's stack and queue come from, and its first current heap.
          * @param priority The priority, where a lower number runs first on Wii U.
          * @param blockType Whether calc waits for messages or polls.
-         * @param quitMsg The message that ends the loop.
+         * @param quitMsg The message that makes run return. It can't be cNullElement.
          * @param stackSize The stack size in bytes.
          * @param messageQueueSize How many messages the queue holds.
          */

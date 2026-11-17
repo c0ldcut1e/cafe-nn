@@ -33,7 +33,7 @@ namespace pead
         /**
          * @brief This registers with heap, and option says what to do when heap is null.
          *
-         * @param heap The heap to register with.
+         * @param heap The heap whose destruction destroys this object, or null.
          * @param option The fallback when heap is null.
          */
         IDisposer(Heap *heap, HeapNullOption option);

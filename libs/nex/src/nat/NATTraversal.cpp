@@ -1,4 +1,6 @@
-#include <nn/nex/NATTraversal.h>
+#include <nn/nex/core/DateTime.h>
+#include <nn/nex/core/String.h>
+#include <nn/nex/nat/NATTraversal.h>
 
 namespace nn::nex
 {
