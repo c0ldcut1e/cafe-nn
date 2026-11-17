@@ -1,0 +1,13 @@
+# Build output
+/build/
+/out/
+compile_commands.json
+
+# Generated on every build from the Lua bindings
+/lua/meta/*.lua
+
+# Editor and tool caches
+/.cache/
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,62 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+        },
+        {
+            "name": "linux",
+            "displayName": "Linux (host, tests run)",
+            "inherits": "base"
+        },
+        {
+            "name": "linux-asan",
+            "displayName": "Linux with AddressSanitizer and UBSan",
+            "inherits": "base",
+            "cacheVariables": { "NEX_SANITIZE": "ON" }
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux release",
+            "inherits": "base",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+        },
+        {
+            "name": "windows-mingw",
+            "displayName": "Windows (mingw-w64, tests run under wine)",
+            "inherits": "base",
+            "toolchainFile": "${sourceDir}/cmake/mingw-w64.cmake"
+        },
+        {
+            "name": "windows-msvc",
+            "displayName": "Windows (Visual Studio)",
+            "inherits": "base",
+            "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
+        },
+        {
+            "name": "wiiu",
+            "displayName": "Wii U (devkitPPC and wut)",
+            "inherits": "base",
+            "toolchainFile": "$env{DEVKITPRO}/cmake/WiiU.cmake",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+        }
+    ],
+    "buildPresets": [
+        { "name": "linux", "configurePreset": "linux" },
+        { "name": "linux-asan", "configurePreset": "linux-asan" },
+        { "name": "linux-release", "configurePreset": "linux-release" },
+        { "name": "windows-mingw", "configurePreset": "windows-mingw" },
+        { "name": "windows-msvc", "configurePreset": "windows-msvc" },
+        { "name": "wiiu", "configurePreset": "wiiu" }
+    ],
+    "testPresets": [
+        { "name": "linux", "configurePreset": "linux", "output": { "outputOnFailure": true } },
+        { "name": "linux-asan", "configurePreset": "linux-asan", "output": { "outputOnFailure": true } },
+        { "name": "windows-mingw", "configurePreset": "windows-mingw", "output": { "outputOnFailure": true } }
+    ]
+}

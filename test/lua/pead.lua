@@ -1,0 +1,73 @@
+local pead = nex.pead
+
+assert(pead.Initialize(0x100000))
+assert(pead.IsInitialized())
+
+local heap = pead.ExpHeap(0x8000, "LuaTestHeap")
+assert(heap:GetName() == "LuaTestHeap")
+local free = heap:GetFreeSize()
+local a = heap:Alloc(100)
+local b = heap:Alloc(256, 64)
+assert(a and b and heap:IsInclude(a) and heap:IsInclude(b))
+assert(heap:Alloc(0x10000) == nil)
+b = heap:Realloc(b, 1024)
+assert(b)
+heap:Free(a)
+heap:Free(b)
+assert(heap:GetFreeSize() == free)
+heap:Destroy()
+assert(not pcall(heap.GetFreeSize, heap))
+
+local r1, r2 = pead.Random(99), pead.Random(99)
+assert(r1:GetU32() == r2:GetU32())
+for _ = 1, 50 do
+    local x = r1:GetS32Range(5, 10)
+    assert(x >= 5 and x < 10)
+    local f = r1:GetF32()
+    assert(f >= 0 and f < 1)
+end
+
+local out = pead.WriteStream(64, "binary", "little")
+out:WriteU16(0x1234)
+out:WriteS32(-7)
+out:WriteF64(0.5)
+out:WriteString("pead", 6)
+local data = out:GetData()
+assert(#data == 2 + 4 + 8 + 6)
+assert(data:byte(1) == 0x34 and data:byte(2) == 0x12)
+local input = pead.ReadStream(data, "binary", "little")
+assert(input:ReadU16() == 0x1234)
+assert(input:ReadS32() == -7)
+assert(input:ReadF64() == 0.5)
+assert(input:ReadString(6) == "pead")
+
+local text = pead.WriteStream(128, "text")
+text:WriteU32(42)
+text:WriteComment("skipped")
+text:WriteString("two words")
+text:WriteMemBlock("\x00\xff")
+local reader = pead.ReadStream(text:GetData(), "text")
+assert(reader:ReadU32() == 42)
+assert(reader:ReadString() == "two words")
+assert(reader:ReadMemBlock(2) == "\x00\xff")
+
+local su = pead.StringUtil
+assert(su.ToUpper("abcäж") == "ABCÄЖ")
+assert(su.ToLower("ＡＢＣ") == "ａｂｃ")
+assert(su.Utf8ToSjis("あ") == "\x82\xa0")
+assert(su.SjisToUtf8("\x82\xa0\xb1") == "あｱ")
+assert(su.TryParseS64(" -12 ") == -12)
+assert(su.TryParseU64("0xff") == 255)
+assert(su.TryParseS64("12x") == nil)
+assert(su.TryParseF64("2.25") == 2.25)
+
+assert(pead.Base64.Encode("foob") == "Zm9vYg==")
+assert(pead.Base64.Decode("Zm9vYg==") == "foob")
+assert(pead.Base64.Decode("!!") == nil)
+
+local leaked = pead.ExpHeap(0x1000)
+pead.Finalize()
+assert(not pead.IsInitialized())
+assert(not pcall(leaked.GetSize, leaked))
+leaked = nil
+collectgarbage()

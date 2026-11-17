@@ -1,0 +1,70 @@
+#include <nn/pia/Result.h>
+
+namespace nn::pia
+{
+    namespace
+    {
+        struct ErrorCodeEntry
+        {
+            u32 value;
+            u32 code;
+        };
+
+        // This is sorted by value so we can binary search it.
+        constexpr ErrorCodeEntry s_errorCodes[] = {
+                {0xc0b, 0x12016b},   {0xc10, 0x120170},   {0xc16, 0x12028e},   {0xc23, 0x1202f1},   {0xc24, 0x1202f2},   {0xc27, 0x1202f5},
+                {0xc35, 0x12022a},   {0x2c03, 0x120164},  {0x2c09, 0x120169},  {0x2c0a, 0x12016a},  {0x2c18, 0x120290},  {0x2c26, 0x1202f4},
+                {0x2c64, 0x1203a1},  {0x4c0d, 0x12016d},  {0x4c11, 0x120171},  {0x4c2c, 0x1203ba},  {0x641e, 0x120297},  {0x641f, 0x120298},
+                {0x6422, 0x12029b},  {0x6434, 0x120229},  {0x6436, 0x12022b},  {0x6439, 0x120356},  {0x643f, 0x12035e},  {0x6442, 0x120361},
+                {0x6443, 0x120363},  {0x6444, 0x120364},  {0x6445, 0x120362},  {0x644a, 0x120369},  {0x6467, 0x1203a7},  {0x6468, 0x1203a9},
+                {0x6469, 0x1203aa},  {0x646a, 0x1203a8},  {0x646f, 0x12041d},  {0x6470, 0x12041e},  {0x6838, 0x120355},  {0x6846, 0x120365},
+                {0x6847, 0x120366},  {0x6848, 0x120367},  {0x6849, 0x120368},  {0x6c05, 0x120165},  {0x6c0e, 0x12016e},  {0x6c19, 0x120291},
+                {0x6c1b, 0x120294},  {0x6c1c, 0x120295},  {0x6c1d, 0x120296},  {0x6c3d, 0x12035a},  {0x6c4b, 0x12037d},  {0x6c4c, 0x12037e},
+                {0x6c4d, 0x12037f},  {0x6c4e, 0x120380},  {0x6c50, 0x120383},  {0x6c51, 0x120381},  {0x6c52, 0x120382},  {0x6c53, 0x120384},
+                {0x6c54, 0x120385},  {0x6c55, 0x120386},  {0x6c57, 0x120388},  {0x6c59, 0x12038a},  {0x6c5b, 0x12038b},  {0x6c5f, 0x12039b},
+                {0x6c60, 0x12039c},  {0x6c61, 0x12039d},  {0x6c62, 0x12039e},  {0x6c63, 0x12039f},  {0x6c65, 0x1203a2},  {0x6c66, 0x1203a0},
+                {0x8c56, 0x120387},  {0xa44f, 0x120391},  {0xa471, 0x1203a3},  {0xa472, 0x1203ae},  {0xa473, 0x1203af},  {0xa474, 0x1203b0},
+                {0xa475, 0x1203b1},  {0xac5a, 0x120392},  {0xac6d, 0x12054b},  {0xc406, 0x120166},  {0xc420, 0x120299},  {0xc421, 0x12029a},
+                {0xec6b, 0x120549},  {0x10c01, 0x120161}, {0x10c02, 0x120162}, {0x10c04, 0x120163}, {0x10c07, 0x120167}, {0x10c08, 0x120168},
+                {0x10c0c, 0x12016c}, {0x10c0f, 0x12016f}, {0x10c13, 0x120173}, {0x10c14, 0x1201c5}, {0x10c25, 0x1202f3}, {0x10c32, 0x1203be},
+                {0x10c3e, 0x12035b},
+        };
+
+        u32 s_nexNetworkErrorCode;
+        u32 s_transportErrorCode;
+    } // namespace
+
+    u32 Result::GetErrorCode() const
+    {
+        if (m_value == SuccessValue)
+            return 0;
+        if (m_value == NexErrorValue && s_nexNetworkErrorCode != 0)
+            return s_nexNetworkErrorCode;
+        if (m_value == TransportErrorValue && s_transportErrorCode != 0)
+            return s_transportErrorCode;
+
+        size_t low  = 0;
+        size_t high = sizeof(s_errorCodes) / sizeof(s_errorCodes[0]);
+        while (low < high)
+        {
+            size_t mid = (low + high) / 2;
+            if (s_errorCodes[mid].value < m_value)
+                low = mid + 1;
+            else
+                high = mid;
+        }
+        if (low < sizeof(s_errorCodes) / sizeof(s_errorCodes[0]) && s_errorCodes[low].value == m_value)
+            return s_errorCodes[low].code;
+        return UnknownErrorCode;
+    }
+
+    void Result::SetNexNetworkErrorCode(u32 code)
+    {
+        s_nexNetworkErrorCode = code;
+    }
+
+    void Result::SetTransportErrorCode(u32 code)
+    {
+        s_transportErrorCode = code;
+    }
+} // namespace nn::pia

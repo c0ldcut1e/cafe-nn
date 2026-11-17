@@ -1,0 +1,43 @@
+local dt = nex.DateTime(2024, 5, 17, 12, 30, 45)
+assert(dt:GetYear() == 2024 and dt:GetMonth() == 5 and dt:GetDay() == 17)
+assert(dt:GetHour() == 12 and dt:GetMinute() == 30 and dt:GetSecond() == 45)
+assert(dt == nex.DateTime(dt:GetValue()))
+assert(nex.DateTime(2023, 1, 1) < dt)
+assert(dt:IsValid())
+
+local url = nex.StationURL("prudps:/address=10.0.0.1;port=60000;PID=2;sid=1;stream=10;type=2")
+assert(url:GetURLType() == nex.StationURL.prudps)
+assert(url:GetAddress() == "10.0.0.1")
+assert(url:GetPortNumber() == 60000)
+assert(url:GetPrincipalID() == 2)
+assert(url:GetStreamType() == nex.Stream.RVSecure)
+assert(url:IsPublic())
+url:SetPortNumber(1234)
+assert(url:GetParameter("port") == "1234")
+url:SetParameter("custom", "x")
+assert(url:HasParameter("custom"))
+assert(nex.StationURL(tostring(url)) == url)
+
+local address = nex.InetAddress("192.168.1.2", 5000)
+assert(tostring(address) == "192.168.1.2:5000")
+assert(address == nex.InetAddress(address:GetAddress(), 5000))
+---@diagnostic disable-next-line: param-type-mismatch
+assert(not pcall(nex.InetAddress, "not an address"))
+
+local range = nex.ResultRange()
+assert(range:GetOffset() == 0 and range:GetSize() == 10)
+range:SetSize(50)
+assert(nex.ResultRange(0, 50):GetSize() == range:GetSize())
+
+assert(nex.QResult.IsSuccess(nex.QResult.Success))
+assert(not nex.QResult.IsSuccess(nex.QResult.Core_Unknown))
+
+-- Kerberos round trips through the key derived from a PID and password
+local key = nex.KerberosEncryption.DeriveKey(1000, "password")
+assert(#key == 16)
+local kerberos = nex.KerberosEncryption(key)
+local sealed = kerberos:Encrypt("hello nex")
+assert(sealed ~= "hello nex")
+assert(kerberos:Decrypt(sealed) == "hello nex")
+local tampered = sealed:sub(1, -2) .. string.char((sealed:byte(-1) + 1) % 256)
+assert(kerberos:Decrypt(tampered) == nil)
